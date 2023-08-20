@@ -1,11 +1,15 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
+from flask_alembic import Alembic
 
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mag.db"
 db.init_app(app)
+alembic = Alembic()
+alembic.init_app(app)
+
 
 class Produkt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -176,5 +180,6 @@ def zakres_histori(start, koniec):
         }
 
     return render_template('history_zakres.html', context=context)
+
 
 
